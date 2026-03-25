@@ -22,8 +22,8 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                new AntPathRequestMatcher("/auth/**"),
-                                new AntPathRequestMatcher("/products/**"),
+                                new AntPathRequestMatcher("/api/auth/**"),
+                                new AntPathRequestMatcher("/api/products/**"),
                                 new AntPathRequestMatcher("/h2-console/**")
                         ).permitAll()
                         .anyRequest().authenticated()
