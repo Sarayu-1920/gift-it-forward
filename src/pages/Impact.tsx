@@ -82,7 +82,7 @@ const Impact = () => {
               <div key={i}>
                 <p className="text-muted-foreground text-sm">Your gift contributed to</p>
                 <p className="text-2xl font-bold text-primary mt-1">{record.cause}</p>
-                <p className="text-muted-foreground mt-2">₹{record.impactAmount.toLocaleString()} donated</p>
+                <p className="text-muted-foreground mt-2">₹{record.impactAmount.toFixed(2)} donated</p>
               </div>
             ))}
           </div>

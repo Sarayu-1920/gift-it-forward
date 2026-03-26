@@ -25,7 +25,7 @@ const [form, setForm] = useState({
   city: "",
   state: "",
   pincode: "",
-  paymentMethod: "cod",
+  paymentMethod: "upi",
   occasion: "",
   personalMessage: "",
   deliveryDate: "",
@@ -187,7 +187,7 @@ const [form, setForm] = useState({
                   </h2>
                   <div className="space-y-3">
                     {[
-                      { value: "cod", label: "Cash on Delivery", desc: "Pay when you receive" },
+//                       { value: "cod", label: "Cash on Delivery", desc: "Pay before delivery" },
                       { value: "upi", label: "UPI Payment", desc: "GPay, PhonePe, Paytm" },
                       { value: "card", label: "Credit / Debit Card", desc: "Visa, Mastercard, RuPay" },
                     ].map((opt) => (
