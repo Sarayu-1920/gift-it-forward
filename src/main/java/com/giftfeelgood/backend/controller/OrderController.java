@@ -26,6 +26,12 @@ public class OrderController {
     public Order placeOrder(@RequestBody OrderRequestDto dto,
                             Authentication authentication) {
 
+        System.out.println("Auth object: " + authentication);
+
+        if (authentication == null) {
+            throw new RuntimeException("No authentication found!");
+        }
+
         String email = authentication.getName();
 
         User user = userRepository.findByEmail(email)

@@ -2,6 +2,8 @@ package com.giftfeelgood.backend.service;
 
 import com.giftfeelgood.backend.dto.*;
 import com.giftfeelgood.backend.model.User;
+import com.giftfeelgood.backend.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.giftfeelgood.backend.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,29 +14,33 @@ public class AuthService {
     @Autowired
     private JwtUtil jwtUtil;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public AuthResponse login(LoginRequest request) {
-        // temporary mock (we’ll connect DB later)
-        User user = new User();
-        user.setId(1L);
-        user.setName("Demo User");
-        user.setEmail(request.getEmail());
-        user.setRole("USER");
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new RuntimeException("Invalid password");
+        }
         String token = jwtUtil.generateToken(user.getEmail(), user.getRole());
-
         return new AuthResponse(token, user);
     }
 
     public AuthResponse signup(SignupRequest request) {
-        // temporary mock
         User user = new User();
-        user.setId(1L);
         user.setName(request.getName());
         user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole("USER");
 
-        String token = jwtUtil.generateToken(user.getEmail(), user.getRole());
+        userRepository.save(user);  // actually saves to DB now
 
+        String token = jwtUtil.generateToken(user.getEmail(), user.getRole());
         return new AuthResponse(token, user);
     }
 }
