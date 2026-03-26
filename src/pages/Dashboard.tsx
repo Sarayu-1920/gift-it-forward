@@ -130,13 +130,19 @@ const Dashboard = () => {
                 </p>
               ) : (
                 orders.map((order) => {
-                   const MemoryIcon =
-                     order.occasion === "Birthday" ? GraduationCap :
-                     order.occasion === "Anniversary" ? TreePine :
-                     order.occasion === "Graduation" ? GraduationCap :
-                     order.occasion === "Festival" ? Heart :
-                     order.occasion === "Wedding" ? Heart :
-                     TreePine;
+                  const MemoryIcon =
+                    order.occasion === "Birthday"
+                      ? GraduationCap
+                      : order.occasion === "Anniversary"
+                      ? TreePine
+                      : order.occasion === "Graduation"
+                      ? GraduationCap
+                      : order.occasion === "Festival"
+                      ? Heart
+                      : order.occasion === "Wedding"
+                      ? Heart
+                      : TreePine;
+
                   return (
                     <div
                       key={order.id}
@@ -149,7 +155,7 @@ const Dashboard = () => {
 
                         <div className="flex-1">
                           <h3 className="font-display font-semibold text-foreground">
-                            {order.occasion}
+                            {order.occasion} for {order.receiverName}
                           </h3>
 
                           <p className="text-xs text-muted-foreground mt-0.5">
@@ -158,21 +164,22 @@ const Dashboard = () => {
                               month: "short",
                               year: "numeric",
                             })}
-                            {" • "}Gift to {order.receiverName}
                           </p>
 
                           <p className="text-sm text-foreground mt-2">
-                            {order.items.map((i) => i.gift.name).join(", ")}
+                            You gifted: {order.items.map((i) => i.gift.name).join(", ")}
                           </p>
 
-                          <div className="bg-primary/5 rounded-lg px-3 py-2 mt-2">
+                          {order.personalMessage && order.personalMessage.trim() !== "" && (
+                            <p className="text-sm text-muted-foreground mt-2 italic">
+                              “{order.personalMessage}”
+                            </p>
+                          )}
+
+                          <div className="bg-primary/5 rounded-lg px-3 py-2 mt-3">
                             <p className="text-xs text-primary font-medium">
                               <MemoryIcon className="h-3 w-3 inline mr-1" />
                               ₹{(order.totalAmount * 0.1).toFixed(2)} impact contributed
-                              {order.occasion === "Birthday" && "Supports children's education"}
-                              {order.occasion === "Anniversary" && "Plants trees for the planet"}
-                              {order.occasion === "Graduation" && "Supports skill development"}
-                              {order.occasion === "Festival" && "Helps feed those in need"}
                             </p>
                           </div>
                         </div>
@@ -184,10 +191,79 @@ const Dashboard = () => {
             </div>
           )}
 
+
+
           {/* Celebration Reveal Cards */}
           {activeTab === "reveals" && (
-            <p className="text-muted-foreground text-sm">Celebration Cards coming soon.</p>
+            <div className="space-y-4">
+              {orders.length === 0 ? (
+                <p className="text-muted-foreground text-sm">
+                  No celebration cards yet. Place an order to unlock one!
+                </p>
+              ) : (
+                orders.map((order) => {
+                  const photoUrl =
+                    order.occasion === "Birthday"
+                      ? "https://images.pexels.com/photos/797527/pexels-photo-797527.jpeg"
+                      : order.occasion === "Anniversary"
+                      ? "https://images.pexels.com/photos/1028725/pexels-photo-1028725.jpeg"
+                      : order.occasion === "Graduation"
+                      ? "https://images.pexels.com/photos/267885/pexels-photo-267885.jpeg"
+                      : order.occasion === "Festival"
+                      ? "https://images.pexels.com/photos/806426/pexels-photo-806426.jpeg"
+                      : "https://images.pexels.com/photos/919734/pexels-photo-919734.jpeg"; // default
+
+                  return (
+                    <div key={order.id} className="bg-card border border-border rounded-2xl overflow-hidden">
+                      <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-5">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Gift className="h-5 w-5 text-primary" />
+                          <span className="text-xs font-semibold text-primary uppercase tracking-wider">
+                            Celebration Reveal
+                          </span>
+                        </div>
+                        <h3 className="font-display font-semibold text-foreground">
+                          Happy {order.occasion}, {order.receiverName}!
+                        </h3>
+                        <p className="text-xs text-muted-foreground mt-0.5">
+                          From {order.senderName || user?.name || "Your friend"} •{" "}
+                          {new Date(order.orderDate).toLocaleDateString("en-IN", {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                          })}
+                        </p>
+                      </div>
+                      <div className="p-5">
+                        <p className="text-sm text-foreground leading-relaxed mb-4">
+                          Your gift did more than just surprise you – it also created real
+                          impact for someone in need.
+                        </p>
+                        <div className="aspect-video rounded-xl bg-muted overflow-hidden mb-3">
+                          <img
+                            src={photoUrl}
+                            alt="Beneficiary thank you"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Button variant="outline" size="sm" className="rounded-full">
+                            <Eye className="h-4 w-4 mr-1" />
+                            View Full Card
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
           )}
+
+
+
+
+
 
 
           {/* Profile */}
