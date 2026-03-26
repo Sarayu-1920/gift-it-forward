@@ -61,6 +61,8 @@ import ProductDetails from "./pages/ProductDetails";
 import Cart from "@/pages/Cart";
 import Checkout from "@/pages/Checkout";
 import Impact from "@/pages/Impact";
+import Index from "@/pages/Index";
+import Dashboard from "@/pages/Dashboard";
 
 const queryClient = new QueryClient();
 
@@ -78,6 +80,8 @@ const App = () => (
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/impact/order/:orderId" element={<Impact />} />
+            <Route path="/" element={<Index />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </CartProvider>
       </AuthProvider>
