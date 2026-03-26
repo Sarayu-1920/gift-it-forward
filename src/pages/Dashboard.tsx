@@ -275,23 +275,32 @@ const Dashboard = () => {
                     <User className="h-8 w-8 text-primary" />
                   </div>
                   <div>
-                    <h2 className="font-display font-semibold text-foreground text-lg">{user?.name || "User"}</h2>
-                    <p className="text-sm text-muted-foreground">{user?.email || "user@example.com"}</p>
+                    <h2 className="font-display font-semibold text-foreground text-lg">
+                      {user?.name || "User"}
+                    </h2>
+                    <p className="text-sm text-muted-foreground">
+                      {user?.email || "user@example.com"}
+                    </p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-3 gap-3 text-center py-4 border-y border-border">
                   <div>
-                    <p className="text-xl font-display font-bold text-primary">{orders.length}</p>
+                    <p className="text-xl font-display font-bold text-primary">
+                      {orders.length}
+                    </p>
                     <p className="text-xs text-muted-foreground">Orders</p>
                   </div>
                   <div>
-                    <p className="text-xl font-display font-bold text-secondary">₹{orders.reduce((s, o) => s + o.impactAmount, 0)}</p>
+                    <p className="text-xl font-display font-bold text-secondary">
+                      ₹{orders.reduce((s, o) => s + o.totalAmount * 0.1, 0).toFixed(2)}
+                    </p>
                     <p className="text-xs text-muted-foreground">Impact</p>
                   </div>
                   <div>
-
-                    <p className="text-xl font-display font-bold text-foreground">{0}</p>
+                    <p className="text-xl font-display font-bold text-foreground">
+                      {orders.length}
+                    </p>
                     <p className="text-xs text-muted-foreground">Memories</p>
                   </div>
                 </div>
@@ -303,13 +312,20 @@ const Dashboard = () => {
                   </Button>
                 </Link>
 
-                <Button variant="ghost" className="w-full text-destructive hover:text-destructive" onClick={logout}>
+                <Button
+                  variant="ghost"
+                  className="w-full text-destructive hover:text-destructive"
+                  onClick={logout}
+                >
                   <LogOut className="h-4 w-4 mr-2" />
                   Sign Out
                 </Button>
               </div>
             </div>
           )}
+
+
+
         </div>
       </div>
       <Footer />
