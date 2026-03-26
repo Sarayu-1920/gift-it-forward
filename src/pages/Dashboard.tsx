@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Package, Heart, Image, User, LogOut, Calendar, TreePine, GraduationCap,
   ChevronRight, Gift, Eye
@@ -33,6 +33,11 @@ const Dashboard = () => {
 
   const [orders, setOrders] = useState<Order[]>([]);
   const [loadingOrders, setLoadingOrders] = useState(false);
+
+   const handleLogout = () => {
+      logout();
+      navigate("/login");
+    };
 
   useEffect(() => {
     setLoadingOrders(true);
@@ -316,13 +321,13 @@ const Dashboard = () => {
                 </Link>
 
                 <Button
-                  variant="ghost"
-                  className="w-full text-destructive hover:text-destructive"
-                  onClick={logout}
-                >
-                  <LogOut className="h-4 w-4 mr-2" />
-                  Sign Out
-                </Button>
+                                  variant="ghost"
+                                  className="w-full text-destructive hover:text-destructive"
+                                  onClick={handleLogout}
+                                >
+                                  <LogOut className="h-4 w-4 mr-2" />
+                                  Sign Out
+                                </Button>
               </div>
             </div>
           )}
