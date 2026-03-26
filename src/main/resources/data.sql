@@ -1,0 +1,4 @@
+INSERT INTO gifts (name, description, price, category, occasion, image_url, impact_type, impact_description, in_stock) VALUES
+                                                                                                                           ('Eco Water Bottle', 'Sustainable bottle', 29.99, 'LIFESTYLE', 'birthday', 'https://example.com/bottle.jpg', 'WATER', 'Provides clean water', true),
+                                                                                                                           ('Plant a Tree Kit', 'Tree planting kit', 49.99, 'NATURE', 'birthday', 'https://example.com/tree.jpg', 'ENVIRONMENT', 'Plants 10 trees', true),
+                                                                                                                           ('Premium Gift Box', 'Premium gift box', 5800.00, 'LIFESTYLE', 'birthday', 'https://example.com/box.jpg', 'FOOD', 'Feeds a family', true);
