@@ -82,6 +82,9 @@ const App = () => (
             <Route path="/impact/order/:orderId" element={<Impact />} />
             <Route path="/" element={<Index />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/impact" element={<Impact />} />
+            <Route path="/impact/:orderId" element={<Impact />} />
+
           </Routes>
         </CartProvider>
       </AuthProvider>

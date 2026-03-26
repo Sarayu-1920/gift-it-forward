@@ -247,10 +247,13 @@ const Dashboard = () => {
                           />
                         </div>
                         <div className="flex items-center gap-2">
-                          <Button variant="outline" size="sm" className="rounded-full">
-                            <Eye className="h-4 w-4 mr-1" />
-                            View Full Card
-                          </Button>
+                          <Link to={`/impact/${order.id}`}>
+                            <Button variant="outline" size="sm" className="rounded-full">
+                              <Eye className="h-4 w-4 mr-1" />
+                              View Full Card
+                            </Button>
+                          </Link>
+
                         </div>
                       </div>
                     </div>
