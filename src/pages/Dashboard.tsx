@@ -35,14 +35,12 @@ const Dashboard = () => {
   const [loadingOrders, setLoadingOrders] = useState(false);
 
   useEffect(() => {
-    if (activeTab === "orders") {
-      setLoadingOrders(true);
-      orderService.getUserOrders()
-        .then(setOrders)
-        .catch(() => setOrders([]))  // silently fail, show empty
-        .finally(() => setLoadingOrders(false));
-    }
-  }, [activeTab]);
+    setLoadingOrders(true);
+    orderService.getUserOrders()
+      .then(setOrders)
+      .catch(() => setOrders([]))
+      .finally(() => setLoadingOrders(false));
+  }, []); // fetch once on mount, not per tab
 
   const tabs: { key: Tab; label: string; icon: typeof Package }[] = [
     { key: "orders", label: "Order History", icon: Package },
@@ -87,7 +85,13 @@ const Dashboard = () => {
               ) : orders.length === 0 ? (
                 <p className="text-muted-foreground text-sm">No orders found.</p>
               ) : orders.map((order) => {
-                const ImpactIcon = impactIcons[order.items[0]?.gift.impactType] || Heart;
+                 const MemoryIcon =
+                   order.occasion === "Birthday" ? GraduationCap :
+                   order.occasion === "Anniversary" ? TreePine :
+                   order.occasion === "Graduation" ? GraduationCap :
+                   order.occasion === "Festival" ? Heart :
+                   order.occasion === "Wedding" ? Heart :
+                   TreePine;
                 return (
                   <div key={order.id} className="bg-card border border-border rounded-2xl p-5">
                     <div className="flex items-start justify-between mb-3">
@@ -104,7 +108,7 @@ const Dashboard = () => {
                     </p>
                     <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
                       <div className="flex items-center gap-1.5 text-xs text-primary">
-                        <ImpactIcon className="h-3.5 w-3.5" />
+                        <MemoryIcon className="h-3 w-3" />
                         <span>₹{(order.totalAmount * 0.1).toFixed(2)} impact contributed</span>
                       </div>
                       <p className="font-display font-bold text-foreground">
@@ -118,8 +122,67 @@ const Dashboard = () => {
           )}
 
           {/* Memory Stack */}
-          {activeTab === "memories" && ( <p className="text-muted-foreground text-sm">Memory Stack coming soon.</p>
-                                         )}
+          {activeTab === "memories" && (
+            <div className="space-y-4">
+              {orders.length === 0 ? (
+                <p className="text-muted-foreground text-sm">
+                  No memories yet. Place an order to create one!
+                </p>
+              ) : (
+                orders.map((order) => {
+                   const MemoryIcon =
+                     order.occasion === "Birthday" ? GraduationCap :
+                     order.occasion === "Anniversary" ? TreePine :
+                     order.occasion === "Graduation" ? GraduationCap :
+                     order.occasion === "Festival" ? Heart :
+                     order.occasion === "Wedding" ? Heart :
+                     TreePine;
+                  return (
+                    <div
+                      key={order.id}
+                      className="bg-card border border-border rounded-2xl p-5"
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-secondary/10 flex items-center justify-center shrink-0">
+                          <MemoryIcon className="h-6 w-6 text-secondary" />
+                        </div>
+
+                        <div className="flex-1">
+                          <h3 className="font-display font-semibold text-foreground">
+                            {order.occasion}
+                          </h3>
+
+                          <p className="text-xs text-muted-foreground mt-0.5">
+                            {new Date(order.orderDate).toLocaleDateString("en-IN", {
+                              day: "2-digit",
+                              month: "short",
+                              year: "numeric",
+                            })}
+                            {" • "}Gift to {order.receiverName}
+                          </p>
+
+                          <p className="text-sm text-foreground mt-2">
+                            {order.items.map((i) => i.gift.name).join(", ")}
+                          </p>
+
+                          <div className="bg-primary/5 rounded-lg px-3 py-2 mt-2">
+                            <p className="text-xs text-primary font-medium">
+                              <MemoryIcon className="h-3 w-3 inline mr-1" />
+                              ₹{(order.totalAmount * 0.1).toFixed(2)} impact contributed
+                              {order.occasion === "Birthday" && "Supports children's education"}
+                              {order.occasion === "Anniversary" && "Plants trees for the planet"}
+                              {order.occasion === "Graduation" && "Supports skill development"}
+                              {order.occasion === "Festival" && "Helps feed those in need"}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          )}
 
           {/* Celebration Reveal Cards */}
           {activeTab === "reveals" && (
