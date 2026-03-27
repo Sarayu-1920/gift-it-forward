@@ -32,7 +32,9 @@ const ImpactBadge = ({ type, description, amount, size = "sm" }: ImpactBadgeProp
         <div>
           <p className="text-sm font-semibold text-foreground">{label}</p>
           <p className="text-xs text-muted-foreground mt-0.5">{description}</p>
-          <p className="text-xs font-semibold text-primary mt-1">₹{amount} contributed</p>
+          <p className="text-xs font-semibold text-primary mt-1">
+            {amount > 0 ? `₹${amount.toLocaleString()} contributed` : "10% of your purchase goes to this cause"}
+          </p>
         </div>
       </div>
     );

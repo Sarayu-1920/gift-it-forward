@@ -78,7 +78,9 @@ const ProductDetails = () => {
                     <Star key={i} className={`h-4 w-4 ${i < Math.floor(product.rating) ? "fill-secondary text-secondary" : "text-border"}`} />
                   ))}
                 </div>
-                <span className="text-sm text-muted-foreground">({product.reviewCount} reviews)</span>
+                <span className="text-sm text-muted-foreground">
+                  {product.reviewCount > 0 ? `(${product.reviewCount} reviews)` : "No reviews yet"}
+                </span>
               </div>
 
               <p className="text-2xl font-display font-bold text-foreground mb-4">₹{product.price.toLocaleString()}</p>
