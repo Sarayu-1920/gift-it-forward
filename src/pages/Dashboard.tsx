@@ -102,6 +102,7 @@ const Dashboard = () => {
                     <div className="flex items-start justify-between mb-3">
                       <div>
                         <p className="font-display font-semibold text-foreground">Order #{order.id}</p>
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-muted text-muted-foreground">Processing</span>
                         <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
                           <Calendar className="h-3 w-3" />
                           {new Date(order.orderDate).toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}
