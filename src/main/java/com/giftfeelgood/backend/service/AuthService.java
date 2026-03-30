@@ -32,6 +32,9 @@ public class AuthService {
     }
 
     public AuthResponse signup(SignupRequest request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new RuntimeException("Email already registered");
+        }
         User user = new User();
         user.setName(request.getName());
         user.setEmail(request.getEmail());
