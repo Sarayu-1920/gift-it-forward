@@ -8,15 +8,17 @@ interface ImpactBadgeProps {
 }
 
 const iconMap: Record<string, typeof TreePine> = {
-  tree_planting: TreePine,
-  education: GraduationCap,
-  ngo_support: Heart,
+  ENVIRONMENT: TreePine,
+  EDUCATION: GraduationCap,
+  FOOD: Heart,
+  WATER: Heart,
 };
 
 const labelMap: Record<string, string> = {
-  tree_planting: "Trees Planted",
-  education: "Education",
-  ngo_support: "NGO Support",
+  ENVIRONMENT: "Environment",
+  EDUCATION: "Education",
+  FOOD: "Food & Nutrition",
+  WATER: "Clean Water",
 };
 
 const ImpactBadge = ({ type, description, amount, size = "sm" }: ImpactBadgeProps) => {
@@ -33,7 +35,7 @@ const ImpactBadge = ({ type, description, amount, size = "sm" }: ImpactBadgeProp
           <p className="text-sm font-semibold text-foreground">{label}</p>
           <p className="text-xs text-muted-foreground mt-0.5">{description}</p>
           <p className="text-xs font-semibold text-primary mt-1">
-            {amount > 0 ? `₹${amount.toLocaleString()} contributed` : "10% of your purchase goes to this cause"}
+            {amount > 0 ? `₹${amount.toLocaleString()} contributed` : `10% of your purchase goes to ${description}`}
           </p>
         </div>
       </div>
