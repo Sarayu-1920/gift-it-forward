@@ -30,5 +30,7 @@ public class Gift {
 
     private boolean inStock;
 
+//    private Double rating;
+//    private Integer reviewCount;
     // Getters & Setters by Lombok
 }
