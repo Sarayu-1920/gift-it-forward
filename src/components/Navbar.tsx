@@ -47,7 +47,7 @@ const Navbar = () => {
                 <User className="h-4 w-4" />
                 {user?.name?.split(" ")[0]}
               </Link>
-              <button onClick={logout} className="text-muted-foreground hover:text-foreground">
+             <button onClick={() => { window.location.href = "/login"; }} className="text-muted-foreground hover:text-foreground">
                 <LogOut className="h-4 w-4" />
               </button>
             </div>
@@ -74,7 +74,7 @@ const Navbar = () => {
             {isAuthenticated ? (
               <>
                 <Link to="/dashboard" className="text-sm font-medium text-muted-foreground py-2" onClick={() => setMobileOpen(false)}>Dashboard</Link>
-                <button className="text-sm font-medium text-destructive py-2 text-left" onClick={() => { logout(); setMobileOpen(false); }}>Sign Out</button>
+                <button className="text-sm font-medium text-destructive py-2 text-left" onClick={() => { logout(); window.location.href = "/login"; }}>Sign Out</button>
               </>
             ) : (
               <Link to="/login" onClick={() => setMobileOpen(false)}>

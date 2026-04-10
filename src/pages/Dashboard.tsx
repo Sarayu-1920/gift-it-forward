@@ -56,9 +56,9 @@ const Dashboard = () => {
   const [loadingOrders, setLoadingOrders] = useState(false);
 
    const handleLogout = () => {
-      logout();
-      navigate("/login");
-    };
+     logout();
+     window.location.href = "/login";
+   };
 
   useEffect(() => {
     setLoadingOrders(true);
