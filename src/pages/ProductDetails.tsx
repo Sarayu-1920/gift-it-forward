@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, ShoppingBag, Minus, Plus, Star } from "lucide-react";
+import { ArrowLeft, ShoppingBag, Minus, Plus } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Loader from "@/components/Loader";
@@ -72,16 +72,7 @@ const ProductDetails = () => {
 
               <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-3">{product.name}</h1>
 
-              <div className="flex items-center gap-2 mb-4">
-                <div className="flex items-center gap-1">
-                  {Array.from({ length: 5 }, (_, i) => (
-                    <Star key={i} className={`h-4 w-4 ${i < Math.floor(product.rating) ? "fill-secondary text-secondary" : "text-border"}`} />
-                  ))}
-                </div>
-                <span className="text-sm text-muted-foreground">
-                  {product.reviewCount > 0 ? `(${product.reviewCount} reviews)` : "No reviews yet"}
-                </span>
-              </div>
+
 
               <p className="text-2xl font-display font-bold text-foreground mb-4">₹{product.price.toLocaleString()}</p>
 

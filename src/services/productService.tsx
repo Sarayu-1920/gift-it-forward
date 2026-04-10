@@ -12,8 +12,7 @@ export interface Product {
   impactType: string;
   impactDescription: string;
   impactAmount: number;
-  rating: number;
-  reviewCount: number;
+
   inStock: boolean;
 }
 
@@ -41,7 +40,7 @@ const MOCK_PRODUCTS: Product[] = [
     id: 1, name: "Handcrafted Bamboo Watch", description: "Eco-friendly bamboo watch with genuine leather strap. Each purchase plants 2 trees.", price: 2499, category: "Eco-Friendly", occasion: "Birthday", imageUrl: "/products/bamboo-watch.jpg", images: ["/products/bamboo-watch.jpg"], impactType: "tree_planting", impactDescription: "Plants 2 trees via Grow-Trees Foundation", impactAmount: 150, rating: 4.5, reviewCount: 128, inStock: true,
   },
   {
-    id: 2, name: "Personalized Photo Frame", description: "Custom engraved wooden photo frame. Part of the proceeds support education for underprivileged children.", price: 1299, category: "Personalized", occasion: "Anniversary", imageUrl: "/products/photo-frame.jpg", images: ["/products/photo-frame.jpg"], impactType: "education", impactDescription: "Funds 1 week of education supplies", impactAmount: 100, rating: 4.8, reviewCount: 256, inStock: true,
+    id: 2, name: "Personalized Photo Frame", description: "Custom engraved wooden photo frame. Part of the proceeds support education for underprivileged children.", price: 1299, category: "Personalized", occasion: "Anniversary", imageUrl: "/products/photo-frame.jpg", images: ["/products/photo-frame.jpg"], impactType: "education", impactDescription: "Funds 1 week of education supplies", impactAmount: 100, inStock: true,
   },
   {
     id: 3, name: "Organic Tea Gift Set", description: "Premium organic tea collection sourced from fair-trade farms.", price: 899, category: "Eco-Friendly", occasion: "Festival", imageUrl: "/products/tea-set.jpg", images: ["/products/tea-set.jpg"], impactType: "ngo_support", impactDescription: "Supports fair-trade farming communities", impactAmount: 75, rating: 4.3, reviewCount: 89, inStock: true,

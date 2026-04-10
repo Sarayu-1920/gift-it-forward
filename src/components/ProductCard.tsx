@@ -39,10 +39,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
           <div>
             <p className="text-lg font-display font-bold text-foreground">₹{product.price.toLocaleString()}</p>
-            <div className="flex items-center gap-1 mt-0.5">
-              <span className="text-xs text-secondary">★ {product.rating}</span>
-              <span className="text-xs text-muted-foreground">({product.reviewCount})</span>
-            </div>
+
           </div>
           <Button
             size="sm"

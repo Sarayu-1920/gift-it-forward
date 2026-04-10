@@ -25,6 +25,27 @@ const statusColors: Record<string, string> = {
   Processing: "bg-muted text-muted-foreground",
 };
 
+const occasionToCause: Record<string, string> = {
+  "Birthday": "Children's Education",
+  "Anniversary": "Tree Plantation",
+  "Wedding": "Clean Water",
+  "Graduation": "Skill Development",
+  "Festival": "Hunger Relief",
+  "Thank You": "Women Empowerment",
+  "Farewell": "Elder Care",
+  "Baby Shower": "Child Health",
+};
+
+const occasionToIcon: Record<string, typeof TreePine> = {
+  "Birthday": Gift,
+  "Anniversary": Heart,
+  "Wedding": Heart,
+  "Graduation": GraduationCap,
+  "Festival": TreePine,
+  "Thank You": Heart,
+  "Farewell": Package,
+  "Baby Shower": Heart,
+};
 type Tab = "orders" | "memories" | "reveals" | "profile";
 
 const Dashboard = () => {
@@ -90,13 +111,7 @@ const Dashboard = () => {
               ) : orders.length === 0 ? (
                 <p className="text-muted-foreground text-sm">No orders found.</p>
               ) : orders.map((order) => {
-                 const MemoryIcon =
-                   order.occasion === "Birthday" ? GraduationCap :
-                   order.occasion === "Anniversary" ? TreePine :
-                   order.occasion === "Graduation" ? GraduationCap :
-                   order.occasion === "Festival" ? Heart :
-                   order.occasion === "Wedding" ? Heart :
-                   TreePine;
+                 const MemoryIcon = occasionToIcon[order.occasion] || Gift;
                 return (
                   <div key={order.id} className="bg-card border border-border rounded-2xl p-5">
                     <div className="flex items-start justify-between mb-3">
@@ -115,7 +130,7 @@ const Dashboard = () => {
                     <div className="flex items-center justify-between mt-3 pt-3 border-t border-border">
                       <div className="flex items-center gap-1.5 text-xs text-primary">
                         <MemoryIcon className="h-3 w-3" />
-                        <span>₹{(order.totalAmount * 0.1).toFixed(2)} impact contributed</span>
+                        <span>₹{(order.totalAmount * 0.1).toFixed(2)} donated to {occasionToCause[order.occasion] || "General Cause"}</span>
                       </div>
                       <p className="font-display font-bold text-foreground">
                         ₹{order.totalAmount.toLocaleString()}
@@ -136,18 +151,7 @@ const Dashboard = () => {
                 </p>
               ) : (
                 orders.map((order) => {
-                  const MemoryIcon =
-                    order.occasion === "Birthday"
-                      ? GraduationCap
-                      : order.occasion === "Anniversary"
-                      ? TreePine
-                      : order.occasion === "Graduation"
-                      ? GraduationCap
-                      : order.occasion === "Festival"
-                      ? Heart
-                      : order.occasion === "Wedding"
-                      ? Heart
-                      : TreePine;
+                  const MemoryIcon = occasionToIcon[order.occasion] || Gift;
 
                   return (
                     <div
@@ -185,7 +189,7 @@ const Dashboard = () => {
                           <div className="bg-primary/5 rounded-lg px-3 py-2 mt-3">
                             <p className="text-xs text-primary font-medium">
                               <MemoryIcon className="h-3 w-3 inline mr-1" />
-                              ₹{(order.totalAmount * 0.1).toFixed(2)} impact contributed
+                              ₹{(order.totalAmount * 0.1).toFixed(2)} donated to {occasionToCause[order.occasion] || "General Cause"}
                             </p>
                           </div>
                         </div>
@@ -208,16 +212,6 @@ const Dashboard = () => {
                 </p>
               ) : (
                 orders.map((order) => {
-                  const photoUrl =
-                    order.occasion === "Birthday"
-                      ? "https://images.pexels.com/photos/797527/pexels-photo-797527.jpeg"
-                      : order.occasion === "Anniversary"
-                      ? "https://images.pexels.com/photos/1028725/pexels-photo-1028725.jpeg"
-                      : order.occasion === "Graduation"
-                      ? "https://images.pexels.com/photos/267885/pexels-photo-267885.jpeg"
-                      : order.occasion === "Festival"
-                      ? "https://images.pexels.com/photos/806426/pexels-photo-806426.jpeg"
-                      : "https://images.pexels.com/photos/919734/pexels-photo-919734.jpeg"; // default
 
                   return (
                     <div key={order.id} className="bg-card border border-border rounded-2xl overflow-hidden">
@@ -245,12 +239,18 @@ const Dashboard = () => {
                           Your gift did more than just surprise you – it also created real
                           impact for someone in need.
                         </p>
-                        <div className="aspect-video rounded-xl bg-muted overflow-hidden mb-3">
-                          <img
-                            src={photoUrl}
-                            alt="Beneficiary thank you"
-                            className="w-full h-full object-cover"
-                          />
+                        <div className={`aspect-[3/1] rounded-xl overflow-hidden mb-3 flex flex-col items-center justify-center gap-2
+                          ${order.occasion === "Birthday" ? "bg-gradient-to-br from-pink-200 to-yellow-200" :
+                            order.occasion === "Anniversary" ? "bg-gradient-to-br from-rose-200 to-purple-200" :
+                            order.occasion === "Graduation" ? "bg-gradient-to-br from-blue-200 to-green-200" :
+                            order.occasion === "Festival" ? "bg-gradient-to-br from-orange-200 to-yellow-300" :
+                            order.occasion === "Wedding" ? "bg-gradient-to-br from-pink-100 to-rose-300" :
+                            order.occasion === "Baby Shower" ? "bg-gradient-to-br from-sky-200 to-pink-200" :
+                            order.occasion === "Farewell" ? "bg-gradient-to-br from-slate-200 to-blue-200" :
+                            order.occasion === "Thank You" ? "bg-gradient-to-br from-green-200 to-teal-200" :
+                            "bg-gradient-to-br from-primary/20 to-secondary/20"}`}>
+                          <Gift className="h-10 w-10 text-primary/60" />
+                          <p className="text-sm font-semibold text-foreground/70">Happy {order.occasion}!</p>
                         </div>
                         <div className="flex items-center gap-2">
                           <Link to={`/impact/${order.id}`}>
