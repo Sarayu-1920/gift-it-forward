@@ -9,7 +9,6 @@ const SORT_OPTIONS = [
   { value: "", label: "Relevance" },
   { value: "price_asc", label: "Price: Low to High" },
   { value: "price_desc", label: "Price: High to Low" },
-  { value: "rating", label: "Highest Rated" },
   { value: "newest", label: "Newest First" },
 ];
 
@@ -112,23 +111,21 @@ const FilterSidebar = ({
       {/* Price Range */}
       <div>
         <Label className="text-sm font-medium text-foreground mb-2 block">Price Range (₹)</Label>
-        <div className="flex items-center gap-2">
-          <Input
-            type="number"
-            placeholder="Min"
-            value={minPrice}
-            onChange={(e) => onMinPriceChange(e.target.value)}
-            className="text-sm"
-          />
-          <span className="text-muted-foreground">–</span>
-          <Input
-            type="number"
-            placeholder="Max"
-            value={maxPrice}
-            onChange={(e) => onMaxPriceChange(e.target.value)}
-            className="text-sm"
-          />
-        </div>
+        <select
+          onChange={(e) => {
+            const [min, max] = e.target.value.split("-");
+            onMinPriceChange(min);
+            onMaxPriceChange(max);
+          }}
+          className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
+        >
+          <option value="-">All Prices</option>
+          <option value="0-500">Under ₹500</option>
+          <option value="500-1000">₹500 – ₹1,000</option>
+          <option value="1000-2500">₹1,000 – ₹2,500</option>
+          <option value="2500-5000">₹2,500 – ₹5,000</option>
+          <option value="5000-99999">Above ₹5,000</option>
+        </select>
       </div>
     </div>
   );
