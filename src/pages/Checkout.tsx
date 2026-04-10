@@ -13,7 +13,7 @@ import api from "@/services/api";
 
 const Checkout = () => {
   const { items, totalPrice, totalImpact, clearCart } = useCart();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated,user} = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
@@ -30,6 +30,18 @@ const [form, setForm] = useState({
   personalMessage: "",
   deliveryDate: "",
 });
+
+const occasionToCause: Record<string, string> = {
+  "Birthday": "Children's Education",
+  "Anniversary": "Tree Plantation",
+  "Wedding": "Clean Water",
+  "Graduation": "Skill Development",
+  "Festival": "Hunger Relief",
+  "Thank You": "Women Empowerment",
+  "Farewell": "Elder Care",
+  "Baby Shower": "Child Health",
+  "Other": "General Cause",
+};
 
   const update = (field: string, value: string) => setForm((prev) => ({ ...prev, [field]: value }));
 
@@ -122,7 +134,7 @@ const [form, setForm] = useState({
                           className="mt-1 w-full border border-border rounded-lg px-3 py-2 text-sm bg-background text-foreground"
                         >
                           <option value="">Select occasion</option>
-                          {["Birthday","Anniversary","Wedding","Graduation","Festival","Thank You","Farewell","Baby Shower"].map((o) => (
+                          {["Birthday","Anniversary","Wedding","Graduation","Festival","Thank You","Farewell","Baby Shower","Other"].map((o) => (
                             <option key={o} value={o}>{o}</option>
                           ))}
                         </select>
@@ -132,7 +144,7 @@ const [form, setForm] = useState({
                         <input
                           type="date"
                           id="deliveryDate"
-                          min={today}
+                          min={today} max={new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0]}
                           value={form.deliveryDate}
                           onChange={(e) => update("deliveryDate", e.target.value)}
                           className="mt-1 w-full border border-border rounded-lg px-3 py-2 text-sm bg-background text-foreground"
@@ -146,19 +158,35 @@ const [form, setForm] = useState({
                           onChange={(e) => update("personalMessage", e.target.value)}
                           rows={3}
                           placeholder="Write a message for the recipient..."
+                          maxLength={200}
                           className="mt-1 w-full border border-border rounded-lg px-3 py-2 text-sm bg-background text-foreground resize-none"
                         />
                       </div>
                     </div>
                   </div>
                   <div className="grid sm:grid-cols-2 gap-4">
-                    <div className="sm:col-span-2">
-                      <Label htmlFor="fullName">Full Name *</Label>
-                      <Input id="fullName" value={form.fullName} onChange={(e) => update("fullName", e.target.value)} className="mt-1" placeholder="Recipient's full name" />
+                    <div className="bg-secondary/10 border border-secondary/30 rounded-xl p-3 mb-4 flex items-center gap-3 cursor-pointer hover:bg-secondary/20 transition-colors">
+                      <input
+                        type="checkbox"
+                        id="selfGift"
+                        onChange={(e) => {
+                          if (e.target.checked) {
+                            update("fullName", user?.name || "");
+                          } else {
+                            update("fullName", "");
+                          }
+                        }}
+                        className="accent-primary w-4 h-4"
+                      />
+                      <Label htmlFor="selfGift" className="text-sm font-semibold text-secondary cursor-pointer">🎁 This gift is for me</Label>
                     </div>
                     <div className="sm:col-span-2">
-                      <Label htmlFor="phone">Phone Number *</Label>
-                      <Input id="phone" type="tel" value={form.phone} onChange={(e) => update("phone", e.target.value)} className="mt-1" placeholder="10-digit phone number" />
+                      <Label htmlFor="fullName" >Full Name *</Label>
+                      <Input id="fullName" value={form.fullName} onChange={(e) => update("fullName", e.target.value)} className="mt-1" placeholder="Recipient's full name" pattern="[A-Za-z\s]+" maxLength={50}/>
+                    </div>
+                    <div className="sm:col-span-2">
+                      <Label htmlFor="phone" >Phone Number *</Label>
+                      <Input id="phone" type="tel" value={form.phone} onChange={(e) => update("phone", e.target.value.replace(/\D/g, "").slice(0, 10))} className="mt-1" placeholder="10-digit phone number" />
                     </div>
                     <div className="sm:col-span-2">
                       <Label htmlFor="address">Street Address *</Label>
@@ -173,8 +201,8 @@ const [form, setForm] = useState({
                       <Input id="state" value={form.state} onChange={(e) => update("state", e.target.value)} className="mt-1" placeholder="State" />
                     </div>
                     <div>
-                      <Label htmlFor="pincode">Pincode *</Label>
-                      <Input id="pincode" value={form.pincode} onChange={(e) => update("pincode", e.target.value)} className="mt-1" placeholder="6-digit pincode" />
+                      <Label htmlFor="pincode" >Pincode *</Label>
+                      <Input id="pincode" value={form.pincode} onChange={(e) => update("pincode", e.target.value)} className="mt-1" placeholder="6-digit pincode" maxLength={6}  pattern="[0-9]{6}"/>
                     </div>
                   </div>
                 </div>
@@ -242,7 +270,7 @@ const [form, setForm] = useState({
 
                   <div className="bg-primary/5 border border-primary/15 rounded-xl p-3 mt-4">
                     <p className="text-xs font-semibold text-primary">Impact included: ₹{totalImpact.toLocaleString()}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5">Auto-donated to social causes</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{form.occasion ? `Going to ${occasionToCause[form.occasion] || "General Cause"}` : "Auto-donated to social causes"}</p>
                   </div>
 
                   <Button type="submit" className="w-full mt-4 bg-primary text-primary-foreground hover:bg-forest rounded-full font-semibold" size="lg" disabled={loading}>
