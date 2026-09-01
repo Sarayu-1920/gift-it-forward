@@ -1,7 +1,6 @@
 package com.giftfeelgood.backend.model;
 
 import jakarta.persistence.*;
-import java.util.List;
 import lombok.Data;
 
 @Data
@@ -22,15 +21,9 @@ public class Gift {
 
     private String imageUrl;
 
-    @ElementCollection
-    private List<String> images;
-
     private String impactType;
     private String impactDescription;
 
     private boolean inStock;
 
-//    private Double rating;
-//    private Integer reviewCount;
-    // Getters & Setters by Lombok
 }
