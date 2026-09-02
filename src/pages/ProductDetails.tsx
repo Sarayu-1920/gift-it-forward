@@ -6,7 +6,8 @@ import Footer from "@/components/Footer";
 import Loader from "@/components/Loader";
 import ImpactBadge from "@/components/ImpactBadge";
 import { Button } from "@/components/ui/button";
-import { productService, Product } from "@/services/productService";
+import { productService } from "@/services/productService";
+import type { Product } from "@/services/productService";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/hooks/use-toast";
 

@@ -7,7 +7,8 @@ import ProductCard from "@/components/ProductCard";
 import FilterSidebar from "@/components/FilterSidebar";
 import Loader from "@/components/Loader";
 import { Button } from "@/components/ui/button";
-import { productService, Product, PaginatedResponse } from "@/services/productService";
+import { productService } from "@/services/productService";
+import type { Product, PaginatedResponse } from "@/services/productService";
 
 const Products = () => {
   const [searchParams] = useSearchParams();

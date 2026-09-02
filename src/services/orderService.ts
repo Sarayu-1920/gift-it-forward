@@ -22,8 +22,7 @@ export interface Order {
   receiverName: string;
   deliveryDate: string;
   items: OrderItem[];
-//   cause: string;       // comes from impact record
-//   impactAmount: number; // comes from impact record
+  personalMessage?: string;
 }
 
 export const orderService = {

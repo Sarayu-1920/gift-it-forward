@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Product } from "@/services/productService";
+import type { Product } from "@/services/productService";
 import ImpactBadge from "@/components/ImpactBadge";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/hooks/use-toast";

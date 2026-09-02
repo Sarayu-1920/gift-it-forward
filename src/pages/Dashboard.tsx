@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Package, Heart, Image, User, LogOut, Calendar, TreePine, GraduationCap,
   ChevronRight, Gift, Eye
@@ -8,22 +8,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
-import { orderService, Order } from "@/services/orderService";
-
-
-const impactIcons: Record<string, typeof TreePine> = {
-  tree_planting: TreePine,
-  TREE: TreePine,
-  education: GraduationCap,
-  EDUCATION: GraduationCap,
-  ngo_support: Heart,
-  FOOD: Heart,
-};
-const statusColors: Record<string, string> = {
-  Delivered: "bg-primary/10 text-primary",
-  Shipped: "bg-secondary/10 text-secondary",
-  Processing: "bg-muted text-muted-foreground",
-};
+import { orderService } from "@/services/orderService";
+import type { Order } from "@/services/orderService";
 
 const occasionToCause: Record<string, string> = {
   "Birthday": "Children's Education",

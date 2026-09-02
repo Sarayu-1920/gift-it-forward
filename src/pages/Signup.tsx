@@ -84,7 +84,7 @@ const Signup = () => {
                 type={showPassword ? "text" : "password"}
                 placeholder="At least 6 characters"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
               />
               <button
                 type="button"
